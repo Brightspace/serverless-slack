@@ -1,7 +1,7 @@
 'use strict';
 
 const AWS = require("aws-sdk"),
-      dynamo = new AWS.DynamoDB.DocumentClient();
+			dynamo = new AWS.DynamoDB.DocumentClient();
 
 
 /**
@@ -11,8 +11,8 @@ const AWS = require("aws-sdk"),
  * @return {Promise} A Promise with the save results
  */
 exports.save = function(data) {
-  data.id = data.team_id;
-  return this.query('put', { Item: data });
+	data.id = data.team_id;
+	return this.query('put', { Item: data });
 }
 
 
@@ -23,9 +23,9 @@ exports.save = function(data) {
  * @return {Promise} A Promise with the get result
  */
 exports.get = function(id) {
-  return this.query('get', { Key: { id: id } }).then(d => {
-    return Promise.resolve(d.Item);
-  });
+	return this.query('get', { Key: { id: id } }).then(d => {
+		return Promise.resolve(d.Item);
+	});
 }
 
 
@@ -37,11 +37,11 @@ exports.get = function(id) {
  * @return {Promise} A Promise with the get result
  */
 exports.query = function(method, params) {
-  params.TableName = process.env.TABLE_NAME;
+	params.TableName = process.env.TABLE_NAME;
 
-  return new Promise((resolve, reject) => {
-    dynamo[method](params, (err, data) => {
-      err ? reject(err) : resolve(data);
-    });
-  });
+	return new Promise((resolve, reject) => {
+		dynamo[method](params, (err, data) => {
+			err ? reject(err) : resolve(data);
+		});
+	});
 }
